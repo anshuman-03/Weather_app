@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span class="weather-emoji">🌤️</span> Weather Forecast
+        </h1>
+        <p class="current-time">{{ current_time }}</p>
+
+        <form method="post" class="weather-form" autocomplete="off">
+            <input type="text" name="city" placeholder="Enter city name" required aria-label="City name">
+            <button type="submit">
+                <span>Get Weather</span>
+            </button>
+        </form>
+        
+        {% if weather %}
+        <div class="result glass">
+            <h2>{{weather.city}}</h2>
+            <p class="temp">{{weather.temperature}}&deg;C</p>
+            <p class="desc">{{weather.description}}</p>
+            <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Weather Icon" class="weather-icon">
+        </div>
+        {% endif %}
+        
+        {% if history %}
+        <div class="history glass">
+            <h3>Recent Searches</h3>
+            <ul>
+                {% for city in history %}
+                <li>{{ city }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
